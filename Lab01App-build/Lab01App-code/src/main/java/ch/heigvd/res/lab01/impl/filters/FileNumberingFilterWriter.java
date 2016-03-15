@@ -46,10 +46,10 @@ public class FileNumberingFilterWriter extends FilterWriter {
          first_time = false;
       }
             
-      if (temp[0] == null ) {
+      if (temp[0] == "") {
          out.write(temp[1]);
       }
-      else if (temp[1] == null) {
+      else if (temp[1] == "") {
          nmbrLigne++;
       out.write(temp[0]+ nmbrLigne + "\t");
       }

@@ -20,40 +20,57 @@ public class Utils {
    * contain any line separator, then the first element is an empty string.
    */
   public static String[] getNextLine(String lines) {
-  
+
      String[] table = new String[2];
      String temp = "";
-     int size = table.length;
      final String SEP1 = "\n";
-     final String SEP2 = "\r";
-   
+     final String SEP2 = "\r";  
+     final String SEP3 = "\r\n";
+     int current_position =0,
+         position1 = -1,
+         position2 = -1,
+         position3= -1;
+     int temp_pos=0;
      
-     for ( int i =0; i < size; i ++) {
-            // looking for the delimeter, and remember its position
-           if (lines.contains(SEP1)) {
-              for ( int k = 0;k <i; k++ )
-                 table[0] = lines.substring(0, lines.indexOf(SEP1));
-              
-              table[1]= lines.substring(lines.indexOf(SEP1)+1);
-            
-           }
-           else if  (lines.contains(SEP2)) {
-              for ( int k = 0;k <i; k++ )
-                 table[0] = lines.substring(0, lines.indexOf(SEP2));
-              
-              table[1]= lines.substring(lines.indexOf(SEP2)+1);
-          
-           }
-          
-          // if nothing was found, lines does not containt any delimeters, we
-          // put everything in the second cas and nothing in the first one
-           else {
-                   table[0] = null;
-                   table[1]= lines;
-     
-     }   
-  }
- return table;
-  }
+     // find the position of these delimiters
+     if (lines.contains(SEP1)) {
+        position1 = lines.indexOf(SEP1);
+     } 
+     else if (lines.contains(SEP2)) {
+        position2 = lines.indexOf(SEP2);
 
+     } 
+     else if (lines.contains(SEP3)) {
+        position3 = lines.indexOf(SEP3);
+     }
+       
+     // nothing was found
+     else {
+        table[0]= "";
+        table [1]= lines;
+        return table;
+     }    
+     
+     
+     
+     //which one occurs first
+     if   ( position1 < position2 ){
+        temp_pos = position1; 
+     }
+     else{
+        temp_pos = position2; 
+     }
+   
+      if (temp_pos > position3) 
+         temp_pos= position3;
+       
+      current_position= temp_pos;
+   
+    table[0] = lines.substring(0, current_position + 1);
+    table[1] = lines.substring(current_position);
+    
+    
+    return table;
+    
+} 
 }
