@@ -20,7 +20,40 @@ public class Utils {
    * contain any line separator, then the first element is an empty string.
    */
   public static String[] getNextLine(String lines) {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+  
+     String[] table = new String[1];
+     String temp = "";
+     int size = table.length;
+     final String SEP1 = "\n";
+     final String SEP2 = "\r";
+   
+     
+     for ( int i =0; i < size; i ++) {
+            // looking for the delimeter, and remember its position
+           if (lines.contains(SEP1)) {
+              for ( int k = 0;k <i; k++ )
+                 table[0] = lines.substring(0, lines.indexOf(SEP1));
+              
+              table[1]= lines.substring(lines.indexOf(SEP1)+1);
+              return table;
+           }
+           else if  (lines.contains(SEP2)) {
+              for ( int k = 0;k <i; k++ )
+                 table[0] = lines.substring(0, lines.indexOf(SEP2));
+              
+              table[1]= lines.substring(lines.indexOf(SEP2)+1);
+              return table;
+           }
+          
+          // if nothing was found, lines does not containt any delimeters, we
+          // put everything in the second cas and nothing in the first one
+           else {
+                   table[0] = null;
+                   table[1]= lines;
+     
+     }   
+  }
+ return table;
   }
 
 }

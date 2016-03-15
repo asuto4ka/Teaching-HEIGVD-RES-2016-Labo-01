@@ -7,8 +7,11 @@ import ch.heigvd.res.lab01.interfaces.IFileExplorer;
 import ch.heigvd.res.lab01.interfaces.IFileVisitor;
 import ch.heigvd.res.lab01.quotes.QuoteClient;
 import ch.heigvd.res.lab01.quotes.Quote;
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes.NULL;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
@@ -94,6 +97,7 @@ public class Application implements IApplication {
        */
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
+         storeQuote(quote, "quote-" + i + ".utf8");
         LOG.info("> " + tag);
       }
     }
@@ -125,7 +129,29 @@ public class Application implements IApplication {
    * @throws IOException 
    */
   void storeQuote(Quote quote, String filename) throws IOException {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+     
+     
+    String temp = WORKSPACE_DIRECTORY +"\\";
+    FileOutputStream fos;
+    BufferedWriter writer;
+    
+    for (String listTag : quote.getTags()) {
+       temp += listTag + "\\";
+    }
+    
+    File myFile = new File (temp+filename);
+    
+    if (myFile.getParentFile() != null)
+       myFile.getParentFile().mkdirs();
+       
+    
+    fos = new FileOutputStream(myFile);
+    writer = new BufferedWriter(new OutputStreamWriter (fos, "utf-8"));
+   
+    writer.write(quote.getQuote());
+    writer.close();
+    fos.close();
+               
   }
   
   /**
@@ -148,7 +174,8 @@ public class Application implements IApplication {
   
   @Override
   public String getAuthorEmail() {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+     String mail ="anastasia.zharkova@heig-vd.ch";
+     return mail;    
   }
 
   @Override
