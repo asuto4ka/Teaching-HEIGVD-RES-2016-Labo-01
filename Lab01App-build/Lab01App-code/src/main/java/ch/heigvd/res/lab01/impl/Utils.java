@@ -21,7 +21,7 @@ public class Utils {
    */
   public static String[] getNextLine(String lines) {
   
-     String[] table = new String[1];
+     String[] table = new String[2];
      String temp = "";
      int size = table.length;
      final String SEP1 = "\n";
@@ -35,14 +35,14 @@ public class Utils {
                  table[0] = lines.substring(0, lines.indexOf(SEP1));
               
               table[1]= lines.substring(lines.indexOf(SEP1)+1);
-              return table;
+            
            }
            else if  (lines.contains(SEP2)) {
               for ( int k = 0;k <i; k++ )
                  table[0] = lines.substring(0, lines.indexOf(SEP2));
               
               table[1]= lines.substring(lines.indexOf(SEP2)+1);
-              return table;
+          
            }
           
           // if nothing was found, lines does not containt any delimeters, we

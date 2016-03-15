@@ -23,10 +23,8 @@ public class DFSFileExplorer implements IFileExplorer {
  
     File[] myList = rootDirectory.listFiles();
     vistor.visit(rootDirectory);
- 
      
      if (myList != null){
-   
        // if this is a file we should visit it
        for (File f: myList){
           if (f.isFile())
