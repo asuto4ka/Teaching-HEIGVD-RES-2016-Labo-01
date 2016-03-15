@@ -8,69 +8,71 @@ import java.util.logging.Logger;
  */
 public class Utils {
 
-  private static final Logger LOG = Logger.getLogger(Utils.class.getName());
+   private static final Logger LOG = Logger.getLogger(Utils.class.getName());
 
-  /**
-   * This method looks for the next new line separators (\r, \n, \r\n) to extract
-   * the next line in the string passed in arguments. 
-   * 
-   * @param lines a string that may contain 0, 1 or more lines
-   * @return an array with 2 elements; the first element is the next line with
-   * the line separator, the second element is the remaining text. If the argument does not
-   * contain any line separator, then the first element is an empty string.
-   */
-  public static String[] getNextLine(String lines) {
+   /**
+    * This method looks for the next new line separators (\r, \n, \r\n) to extract
+    * the next line in the string passed in arguments.
+    *
+    * @param lines a string that may contain 0, 1 or more lines
+    * @return an array with 2 elements; the first element is the next line with the
+    * line separator, the second element is the remaining text. If the argument does
+    * not contain any line separator, then the first element is an empty string.
+    */
+   public static String[] getNextLine(String lines) {
 
-     String[] table = new String[2];
-     String temp = "";
-     final String SEP1 = "\n";
-     final String SEP2 = "\r";  
-     final String SEP3 = "\r\n";
-     int current_position =0,
-         position1 = -1,
-         position2 = -1,
-         position3= -1;
-     int temp_pos=0;
-     
-     // find the position of these delimiters
-     if (lines.contains(SEP1)) {
-        position1 = lines.indexOf(SEP1);
-     } 
-     else if (lines.contains(SEP2)) {
-        position2 = lines.indexOf(SEP2);
+      String[] table = new String[2];
+      final String SEP1 = "\n";
+      final String SEP2 = "\r";
+      final String SEP3 = "\r\n";
+      int position ;
 
-     } 
-     else if (lines.contains(SEP3)) {
-        position3 = lines.indexOf(SEP3);
-     }
-       
-     // nothing was found
-     else {
-        table[0]= "";
-        table [1]= lines;
-        return table;
-     }    
-     
-     
-     
-     //which one occurs first
-     if   ( position1 < position2 ){
-        temp_pos = position1; 
-     }
-     else{
-        temp_pos = position2; 
-     }
-   
-      if (temp_pos > position3) 
-         temp_pos= position3;
-       
-      current_position= temp_pos;
-   
-    table[0] = lines.substring(0, current_position + 1);
-    table[1] = lines.substring(current_position);
-    
-    
-    return table;
-    
-} 
+      // find the position of these delimiters
+      if (lines.contains(SEP1)) {
+         position = lines.indexOf(SEP1);
+         // delimiteur = SEP1;
+      } else if (lines.contains(SEP2)) {
+         position = lines.indexOf(SEP2);
+         //  delimiteur = SEP2;
+      } else if (lines.contains(SEP3)) {
+         position = lines.indexOf(SEP3);
+         //delimiteur = SEP3;
+      } //If there is no delimiter
+      else {
+         table[0] = "";
+         table[1] = lines;
+         return table;
+      }
+
+      
+      
+//       int idx = lines.indexOf(delimiter) + 1;
+//    array[0] = lines.substring(0, idx);
+//
+//    //Case where the line contain other lines
+//    if(lines.length() > idx){
+//      array[1] = lines.substring(idx);
+//    }
+//    //Case where there is no other line
+//    else{
+//      array[1] = "";
+//    }
+//    return array;
+//  }
+//      
+      
+      
+      table[0] = lines.substring(0, position + 1);
+
+      //if something left in the ligne
+      if (lines.length() > position) {
+         table[1] = lines.substring(position+1);
+      } 
+      //if there is nothing
+      else {
+         table[1] = "";
+      }
+      return table;
+
+   }
 }
