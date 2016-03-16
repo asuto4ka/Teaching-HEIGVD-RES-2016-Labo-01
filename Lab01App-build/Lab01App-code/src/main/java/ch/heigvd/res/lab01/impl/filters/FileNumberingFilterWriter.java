@@ -76,9 +76,9 @@ public class FileNumberingFilterWriter extends FilterWriter {
             return;
          }
                 
-        // if the previous char was a \r
+   
         if(next_char){
-            // and if the current char is a \n we have to deal with windows EOF.
+            //  if the current char is a \n we have to deal with windows EOF.
             if(temp == '\n'){
                 nmbrLigne ++;
                 out.write("\r\n" + nmbrLigne + "\t");
@@ -87,7 +87,7 @@ public class FileNumberingFilterWriter extends FilterWriter {
              // char.
             else{
                 nmbrLigne++;
-                out.write("\r" + nmbrLigne + "\t");
+                out.write("\r" + nmbrLigne + "\t" +temp);
                 next_char = false; 
             }
         }

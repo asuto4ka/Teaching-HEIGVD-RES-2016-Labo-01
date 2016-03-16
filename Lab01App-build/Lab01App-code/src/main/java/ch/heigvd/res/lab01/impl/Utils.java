@@ -25,54 +25,69 @@ public class Utils {
       final String SEP1 = "\n";
       final String SEP2 = "\r";
       final String SEP3 = "\r\n";
-      int position ;
+
+      int position, position1 = -1, position2 = -1, position3 = -1;
+      int flag=1;
 
       // find the position of these delimiters
       if (lines.contains(SEP1)) {
-         position = lines.indexOf(SEP1);
-         // delimiteur = SEP1;
-      } else if (lines.contains(SEP2)) {
-         position = lines.indexOf(SEP2);
-         //  delimiteur = SEP2;
-      } else if (lines.contains(SEP3)) {
-         position = lines.indexOf(SEP3);
-         //delimiteur = SEP3;
-      } //If there is no delimiter
-      else {
+         position1 = lines.indexOf(SEP1);
+      }
+      if (lines.contains(SEP2)) {
+         position2 = lines.indexOf(SEP2);
+      // check if the "\n" is the next char after "\r"
+          if (position2 < lines.length()-2 && lines.substring(position2+1, position2+2).equals(SEP1)  )
+                  position2=-1;
+      }
+      if (lines.contains(SEP3)) {
+         position3 = lines.indexOf(SEP3);
+                 
+            
+      }
+
+//If there is no delimiter
+      if (position1 == -1 && position2 == -1 && position3 == -1) {
+
          table[0] = "";
          table[1] = lines;
          return table;
+
+      } else {
+      // since -1 is always smaller that the min value of existing caracter we have
+         // to fixe it to the biggest value in order to be sure to pick the smallest position   
+         if (position1 == -1) {
+            position1 = Integer.MAX_VALUE;
+         }
+
+         if (position2 == -1) {
+            position2 = Integer.MAX_VALUE;
+         }
+
+         if (position3 == -1) {
+            position3 = Integer.MAX_VALUE;
+         }
+
+         // find the smallest potision
+         if (position2 < position3) {
+            if (position1 < position2) {
+               position = position1;
+            } else {
+               position = position2;
+            }
+         } else {
+            if (position3 < position1) {
+               position = position3;
+               flag=2;
+            } else {
+               position = position1;
+            }
+         }
+         
+         //if \r\n was found we have to add 2 position, if not we add 1
+         table[0] = lines.substring(0, position + flag);
+         table[1] = lines.substring(position + flag);
+         return table;
+
       }
-
-      
-      
-//       int idx = lines.indexOf(delimiter) + 1;
-//    array[0] = lines.substring(0, idx);
-//
-//    //Case where the line contain other lines
-//    if(lines.length() > idx){
-//      array[1] = lines.substring(idx);
-//    }
-//    //Case where there is no other line
-//    else{
-//      array[1] = "";
-//    }
-//    return array;
-//  }
-//      
-      
-      
-      table[0] = lines.substring(0, position + 1);
-
-      //if something left in the ligne
-      if (lines.length() > position) {
-         table[1] = lines.substring(position+1);
-      } 
-      //if there is nothing
-      else {
-         table[1] = "";
-      }
-      return table;
-
    }
 }

@@ -96,10 +96,11 @@ public class Application implements IApplication {
        * quote in a text file (and for generating the directories based on the tags).
        */
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
-      for (String tag : quote.getTags()) {
-         storeQuote(quote, "quote-" + i + ".utf8");
+      for (String tag : quote.getTags()) {         
         LOG.info("> " + tag);
       }
+      // for each tag 
+      storeQuote(quote, "quote-" + i + ".utf8");
     }
   }
   
@@ -131,12 +132,12 @@ public class Application implements IApplication {
   void storeQuote(Quote quote, String filename) throws IOException {
      
      
-    String temp = WORKSPACE_DIRECTORY +"\\";
+    String temp = WORKSPACE_DIRECTORY + File.separator;
     FileOutputStream fos;
     BufferedWriter writer;
     
     for (String listTag : quote.getTags()) {
-       temp += listTag + "\\";
+       temp += listTag + File.separator;
     }
     
     File myFile = new File (temp+filename);
@@ -163,11 +164,19 @@ public class Application implements IApplication {
     explorer.explore(new File(WORKSPACE_DIRECTORY), new IFileVisitor() {
       @Override
       public void visit(File file) {
-        /*
-         * There is a missing piece here. Notice how we use an anonymous class here. We provide the implementation
-         * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
-         * be pretty easy (we want to write the filename, including the path, to the writer passed in argument).
-         */
+         try {
+            /*
+            * There is a missing piece here. Notice how we use an anonymous class here. We provide the implementation
+            * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
+            * be pretty easy (we want to write the filename, including the path, to the writer passed in argument).
+            */
+            // name of the file
+            writer.write(file.getPath() + "\n");
+         } catch (IOException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      
+         
       }
     });
   }
